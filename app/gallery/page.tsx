@@ -25,8 +25,8 @@ export default function GalleryPage() {
 
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+                <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-pink-600/10 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-100 h-100 bg-purple-600/10 rounded-full blur-[100px]"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
             </div>
 
@@ -44,7 +44,7 @@ export default function GalleryPage() {
 
                     <div className="flex items-center gap-3">
                         <h1 className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-pink-300 to-rose-400 hidden sm:block">
-                            Galeria Noastră
+                            Galeria noastră
                         </h1>
                         {/* Iconița CAMERA "Calumea" */}
                         <div className="bg-linear-to-br from-pink-500 to-rose-600 p-2.5 rounded-xl shadow-lg shadow-pink-500/20 transform rotate-3 hover:rotate-0 transition-transform duration-300 border border-white/20">

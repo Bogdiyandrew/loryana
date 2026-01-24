@@ -17,25 +17,36 @@ export default function ScrisoriPage() {
 
     // --- LISTA SCRISORILOR ---
     const letters = [
-        // --- 1. SCRISORI PREZENT (DEBLOCATE) ---
         {
             id: 1,
-            title: "Citește-mă când ți-e dor de noi...",
+            title: "Scrisori facute de mine",
             emoji: "🥺",
             date: "24 Ian 2026",
             unlockDate: null,
             color: "from-pink-500 to-rose-500",
             content: `
+        de completat cu poze
+      `
+        },
+
+        {
+            id: 2,
+            title: "Citește-mă când ți-e dor de noi...",
+            emoji: "🥺",
+            date: "2026",
+            unlockDate: null,
+            color: "from-pink-500 to-rose-500",
+            content: `
         Iubirea mea,
         
-        Dacă citești asta, înseamnă că suntem departe unul de celălalt acum. Vreau doar să știi că fiecare secundă fără tine pare o eternitate.
-        Abia aștept să te strâng în brațe din nou.
+        Dacă citești asta, înseamnă că nu ne-am mai vǎzut de mult timp.
+        Dar sǎ ştii ca te iubesc şi voi face tot posibilul să te strâng în brațe din nou cât mai repede.
         
         Te iubesc infinit.
       `
         },
         {
-            id: 2,
+            id: 3,
             title: "De ce te iubesc?",
             emoji: "❤️",
             date: "Azi și mereu",
@@ -43,7 +54,8 @@ export default function ScrisoriPage() {
             color: "from-rose-500 to-red-600",
             content: `
         Te iubesc pentru că ești tu.
-        Te iubesc pentru felul în care îți dai părul după ureche.
+        Te iubesc pentru felul în care te comporți.
+        Te iubesc pentru rǎbdarea ta.
         Te iubesc pentru că ești cea mai bună prietenă a mea.
         
         Și te iubesc pentru că, indiferent ce se întâmplă, tu ești acasă pentru mine.
@@ -54,7 +66,7 @@ export default function ScrisoriPage() {
 
         // Valentine's Day
         {
-            id: 3,
+            id: 4,
             title: "Secret de Valentine's Day 🌹",
             emoji: "🔒",
             date: "14 Feb 2026",
@@ -70,7 +82,7 @@ export default function ScrisoriPage() {
 
         // Dragobete
         {
-            id: 4,
+            id: 5,
             title: "De Dragobete",
             emoji: "💙",
             date: "24 Feb 2026",
@@ -86,7 +98,7 @@ export default function ScrisoriPage() {
 
         // Ziua Femeii
         {
-            id: 5,
+            id: 6,
             title: "Pentru cea mai frumoasă femeie 🌷",
             emoji: "💃",
             date: "08 Mar 2026",
@@ -103,7 +115,7 @@ export default function ScrisoriPage() {
 
         // 1 AN DE RELAȚIE
         {
-            id: 6,
+            id: 7,
             title: "1 AN DE NOI DOI! 🥂",
             emoji: "👑",
             date: "23 Iul 2026",
@@ -146,8 +158,8 @@ export default function ScrisoriPage() {
 
             {/* Background Effects */}
             <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-[20%] right-[-10%] w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[10%] left-[-10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+                <div className="absolute top-[20%] right-[-10%] w-125 h-125 bg-pink-600/10 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-[10%] left-[-10%] w-125 h-125 bg-purple-600/10 rounded-full blur-[100px]"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
             </div>
 

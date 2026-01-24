@@ -8,7 +8,7 @@ export default function LoginPage() {
     {
       id: 1,
       type: "normal",
-      question: "Să calculăm puțin. Întoarce infinitul. Ultima lună nu rămâne întreagă. Adaugă numărul din basm care apare de două ori.",
+      question: "Să calculăm puțin. Întoarce infinitul. Ultima lună nu rămâne întreagă. Adaugă numărul din basm care apare de trei ori.",
       hint: "Ce pare imposibil devine 8, ce e final se rupe în două şi le aduni, iar basmul se multiplică.",
       answer: "23",
       placeholder: "??"
@@ -64,7 +64,7 @@ export default function LoginPage() {
       advanceLevel(correctVal)
     } else {
       const errorMessages = [
-        "Greșit iubito! 🧐",
+        "Greșit iubire! 🧐",
         "Mai încearcă! ❤️",
         "Nu e asta... 🤔",
         "Ups! Greșit 🥺"

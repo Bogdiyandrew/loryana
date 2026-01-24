@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { signOut } from "@/auth" // Sau funcția de logout dacă folosim next-auth
-// Dacă nu ai importat signOut corect, vom face un buton simplu de form action momentan
+import Image from "next/image"
 
 export default function HomePage() {
   const [timeTogether, setTimeTogether] = useState({
@@ -30,15 +29,16 @@ export default function HomePage() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [])
+  }, [startDate])
 
   return (
     <div className="min-h-dvh bg-zinc-950 text-pink-50 font-sans relative overflow-x-hidden selection:bg-pink-500/30">
 
       {/* --- BACKGROUND EFFECTS --- */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+        {/* Clase actualizate conform sugestiilor VS Code */}
+        <div className="absolute top-[-10%] right-[-10%] w-125 h-125 bg-pink-600/20 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-100 h-100 bg-purple-600/10 rounded-full blur-[100px]"></div>
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
       </div>
 
@@ -52,36 +52,43 @@ export default function HomePage() {
           </div>
 
           {/* Buton Logout */}
-          <form action={async () => {
-            // Aici vom lega logout-ul real mai târziu, momentan e vizual
-            window.location.href = "/api/auth/signout"
-          }}>
-            <button className="text-xs font-bold text-pink-400/70 hover:text-pink-300 border border-pink-500/20 px-3 py-1.5 rounded-full transition-colors">
-              Ieșire
-            </button>
-          </form>
+          <button 
+            onClick={() => window.location.href = "/api/auth/signout"}
+            className="text-xs font-bold text-pink-400/70 hover:text-pink-300 border border-pink-500/20 px-3 py-1.5 rounded-full transition-colors"
+          >
+            Ieșire
+          </button>
         </header>
 
         {/* --- HERO SECTION --- */}
         <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl space-y-8 animate-in zoom-in-95 duration-1000">
 
           <div className="relative">
+            {/* Corectat conform sugestiilor tale (bg-linear-to-r) */}
             <div className="absolute -inset-1 bg-linear-to-r from-pink-600 to-purple-600 rounded-full blur opacity-30 animate-pulse"></div>
+            
             <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mx-auto">
-              {/* AICI O SĂ PUNEM POZA EI/VOASTRĂ */}
-              <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-4xl">
-                👩‍❤️‍👨
-              </div>
-              {/* <Image src="/poza-voastra.jpg" fill className="object-cover" /> */}
+              
+              <Image 
+                src="/gallery/poza7.PNG" 
+                alt="Noi doi"
+                fill 
+                className="object-cover"
+                priority 
+                unoptimized
+              />
+              
             </div>
+            
             <div className="absolute bottom-0 right-0 bg-emerald-500 w-6 h-6 rounded-full border-4 border-zinc-950 flex items-center justify-center">
               <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
             </div>
           </div>
 
           <div className="space-y-2">
-            <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
-              Bună, Iubirea Mea!
+            {/* Corectat bg-linear-to-r */}
+            <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
+              Bună, iubire!
             </h1>
             <p className="text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
               Bine ai venit în universul nostru digital. Aici păstrez toate amintirile noastre.
@@ -140,17 +147,16 @@ export default function HomePage() {
 
         </div>
 
-        {/* --- MENU GRID (Urmează să le facem funcționale) --- */}
-
+        {/* --- MENU GRID --- */}
         <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl animate-in slide-in-from-bottom-8 duration-1000 delay-300">
           <Link href="/gallery" className="group bg-zinc-900/50 hover:bg-pink-900/20 border border-white/5 hover:border-pink-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">📸</span>
-            <span className="text-sm font-bold text-zinc-300 group-hover:text-pink-200">Galeria Noastră</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-pink-200">Galerie</span>
           </Link>
 
           <Link href="/scrisori" className="group bg-zinc-900/50 hover:bg-purple-900/20 border border-white/5 hover:border-purple-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">💌</span>
-            <span className="text-sm font-bold text-zinc-300 group-hover:text-purple-200">Scrisori pentru Tine</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-purple-200">Scrisori</span>
           </Link>
 
           <Link href="/timeline" className="group bg-zinc-900/50 hover:bg-rose-900/20 border border-white/5 hover:border-rose-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
