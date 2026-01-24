@@ -2,12 +2,13 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, Plus, Calendar, Clock, User, Trash2, MessageCircle, Wallet, Sparkles, X } from "lucide-react"
+import { ArrowLeft, Plus, Calendar, Clock, User, Trash2, MessageCircle, Wallet, Sparkles, X, Phone } from "lucide-react"
 
-// Tipul pentru o programare
+// Tipul pentru o programare (Actualizat cu telefon)
 type Appointment = {
   id: number
   clientName: string
+  phoneNumber: string // <-- Câmp nou
   service: string
   date: string
   time: string
@@ -22,11 +23,12 @@ export default function AgendaPage() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  // Formular nou
+  // Formular nou (Actualizat)
   const [newApp, setNewApp] = useState({
     clientName: "",
+    phoneNumber: "", // <-- Default gol
     service: "Semipermanentă",
-    date: new Date().toISOString().split('T')[0], // Azi default
+    date: new Date().toISOString().split('T')[0],
     time: "12:00",
     price: 100,
     notes: ""
@@ -41,7 +43,7 @@ export default function AgendaPage() {
     setIsLoaded(true)
   }, [])
 
-  // --- 2. SALVARE AUTOMATĂ CÂND SE SCHIMBĂ CEVA ---
+  // --- 2. SALVARE AUTOMATĂ ---
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem("loryana_agenda", JSON.stringify(appointments))
@@ -58,7 +60,7 @@ export default function AgendaPage() {
       ...newApp
     }
 
-    // Adăugăm și sortăm după dată și oră
+    // Sortare cronologică
     const updatedList = [...appointments, appointment].sort((a, b) => {
         return new Date(`${a.date}T${a.time}`).getTime() - new Date(`${b.date}T${b.time}`).getTime()
     })
@@ -66,8 +68,8 @@ export default function AgendaPage() {
     setAppointments(updatedList)
     setShowAddModal(false)
     
-    // Reset parțial
-    setNewApp(prev => ({ ...prev, clientName: "", notes: "" }))
+    // Reset (păstrăm data curentă ca să fie ușor să adauge mai multe)
+    setNewApp(prev => ({ ...prev, clientName: "", phoneNumber: "", notes: "" }))
   }
 
   const handleDelete = (id: number) => {
@@ -77,9 +79,23 @@ export default function AgendaPage() {
   }
 
   const handleWhatsAppConfirm = (app: Appointment) => {
-    // Mesaj predefinit către clientă
+    // 1. Curățăm numărul de spații sau caractere ciudate
+    let cleanNumber = app.phoneNumber.replace(/\D/g, ''); // Lasă doar cifrele
+    
+    // 2. Formatăm pentru România (dacă începe cu 07, punem 4 în față)
+    // WhatsApp are nevoie de formatul: 407xxxxxxxx
+    if (cleanNumber.startsWith('07')) {
+        cleanNumber = '4' + cleanNumber;
+    }
+
     const text = `Bună, ${app.clientName}! 👋 Îți scriu să îți reamintesc de programarea ta la unghii pentru ${app.date} la ora ${app.time}. Te aștept cu drag! 💅`
-    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank")
+    
+    // Dacă avem număr, deschidem chat direct. Dacă nu, deschidem lista generală.
+    const url = cleanNumber 
+        ? `https://wa.me/${cleanNumber}?text=${encodeURIComponent(text)}`
+        : `https://wa.me/?text=${encodeURIComponent(text)}`
+
+    window.open(url, "_blank")
   }
 
   // --- CALCUL STATISTICI ---
@@ -108,7 +124,7 @@ export default function AgendaPage() {
             <span>Înapoi</span>
           </Link>
           <h1 className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-pink-300 to-fuchsia-400">
-            Agenda Mea 💅
+            Agenda mea 💅
           </h1>
         </header>
 
@@ -156,7 +172,10 @@ export default function AgendaPage() {
                                 <User className="w-4 h-4 text-zinc-500" />
                                 {app.clientName}
                             </h3>
-                            <p className="text-sm text-zinc-400 ml-6">{app.service}</p>
+                            {/* Afișăm telefonul micuț sub nume */}
+                            <p className="text-xs text-zinc-500 ml-6 font-mono">{app.phoneNumber}</p>
+                            
+                            <p className="text-sm text-zinc-400 ml-6 mt-1">{app.service}</p>
                             {app.notes && <p className="text-xs text-zinc-600 ml-6 mt-1 italic">"{app.notes}"</p>}
                         </div>
 
@@ -192,27 +211,42 @@ export default function AgendaPage() {
       {/* --- MODAL ADĂUGARE --- */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in">
-            <div className="bg-zinc-900 w-full max-w-md rounded-3xl border border-white/10 p-6 shadow-2xl animate-in slide-in-from-bottom-10">
+            <div className="bg-zinc-900 w-full max-w-md rounded-3xl border border-white/10 p-6 shadow-2xl animate-in slide-in-from-bottom-10 max-h-[90vh] overflow-y-auto">
                 
                 <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-white">Programare Nouă</h2>
+                    <h2 className="text-xl font-bold text-white">Programare nouă</h2>
                     <button onClick={() => setShowAddModal(false)} className="p-2 bg-zinc-800 rounded-full text-zinc-400 hover:text-white">
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 <div className="space-y-4">
-                    {/* Nume */}
-                    <div>
-                        <label className="text-xs text-zinc-500 uppercase font-bold ml-1">Clientă</label>
-                        <input 
-                            type="text" 
-                            value={newApp.clientName}
-                            onChange={e => setNewApp({...newApp, clientName: e.target.value})}
-                            placeholder="Ex: Andreea Popescu"
-                            className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:border-pink-500 outline-none"
-                            autoFocus
-                        />
+                    {/* Nume & Telefon */}
+                    <div className="grid grid-cols-1 gap-4">
+                        <div>
+                            <label className="text-xs text-zinc-500 uppercase font-bold ml-1">Clientă</label>
+                            <input 
+                                type="text" 
+                                value={newApp.clientName}
+                                onChange={e => setNewApp({...newApp, clientName: e.target.value})}
+                                placeholder="Ex: Andreea Popescu"
+                                className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:border-pink-500 outline-none"
+                                autoFocus
+                            />
+                        </div>
+                        <div>
+                            <label className="text-xs text-zinc-500 uppercase font-bold ml-1 flex items-center gap-1">
+                                <Phone className="w-3 h-3" /> Telefon
+                            </label>
+                            <input 
+                                type="tel" 
+                                value={newApp.phoneNumber}
+                                onChange={e => setNewApp({...newApp, phoneNumber: e.target.value})}
+                                placeholder="Ex: 0722 123 456"
+                                className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:border-pink-500 outline-none font-mono"
+                            />
+                            <p className="text-[10px] text-zinc-600 mt-1 ml-1">Necesar pentru confirmarea pe WhatsApp</p>
+                        </div>
                     </div>
 
                     {/* Serviciu & Preț */}
@@ -225,8 +259,8 @@ export default function AgendaPage() {
                                 className="w-full bg-zinc-950 border border-white/10 rounded-xl p-3 text-white focus:border-pink-500 outline-none appearance-none"
                             >
                                 <option>Semipermanentă</option>
-                                <option>Gel Construcție</option>
-                                <option>Gel Întreținere</option>
+                                <option>Gel construcție</option>
+                                <option>Gel întreținere</option>
                                 <option>Pedichiură</option>
                             </select>
                         </div>
