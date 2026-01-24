@@ -34,12 +34,15 @@ export default function HomePage() {
   return (
     <div className="min-h-dvh bg-zinc-950 text-pink-50 font-sans relative overflow-x-hidden selection:bg-pink-500/30">
 
-      {/* --- BACKGROUND EFFECTS --- */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Clase actualizate conform sugestiilor VS Code */}
-        <div className="absolute top-[-10%] right-[-10%] w-125 h-125 bg-pink-600/20 rounded-full blur-[120px] animate-pulse"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-100 h-100 bg-purple-600/10 rounded-full blur-[100px]"></div>
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+      {/* --- BACKGROUND EFFECTS (OPTIMIZAT PENTRU MOBIL) --- */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Folosim transform-gpu și translate-z-0 pentru a forța placa video.
+            Am redus dimensiunile (w-80) și blur-ul (80px) pe mobil pentru performanță. */}
+        <div className="absolute top-[-10%] right-[-10%] w-80 h-80 sm:w-125 sm:h-125 bg-pink-600/20 rounded-full blur-[80px] sm:blur-[120px] animate-pulse transform-gpu translate-z-0"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-60 h-60 sm:w-100 sm:h-100 bg-purple-600/10 rounded-full blur-[60px] sm:blur-[100px] transform-gpu translate-z-0"></div>
+        
+        {/* Noise cu mix-blend-overlay pentru randare mai ușoară */}
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150 mix-blend-overlay"></div>
       </div>
 
       <main className="relative z-10 container mx-auto px-4 py-8 flex flex-col items-center min-h-dvh">
@@ -60,11 +63,13 @@ export default function HomePage() {
           </button>
         </header>
 
-        {/* --- HERO SECTION --- */}
-        <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl space-y-8 animate-in zoom-in-95 duration-1000">
+        {/* --- HERO SECTION --- 
+            Am adăugat 'sm:' la animații. Pe mobil (fără sm) nu se va mai anima la intrare,
+            ceea ce rezolvă senzația de "greu" la navigarea Back.
+        */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl space-y-8 sm:animate-in sm:zoom-in-95 sm:duration-1000">
 
           <div className="relative">
-            {/* Corectat conform sugestiilor tale (bg-linear-to-r) */}
             <div className="absolute -inset-1 bg-linear-to-r from-pink-600 to-purple-600 rounded-full blur opacity-30 animate-pulse"></div>
             
             <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mx-auto">
@@ -76,6 +81,8 @@ export default function HomePage() {
                 className="object-cover"
                 priority 
                 unoptimized
+                // sizes ajută browserul să aloce memorie corect
+                sizes="(max-width: 768px) 150px, (max-width: 1200px) 200px, 200px"
               />
               
             </div>
@@ -86,7 +93,6 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-2">
-            {/* Corectat bg-linear-to-r */}
             <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
               Bună, iubire!
             </h1>
@@ -147,9 +153,10 @@ export default function HomePage() {
 
         </div>
 
-        {/* --- MENU GRID --- */}
-        {/* --- MENU GRID --- */}
-        <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl animate-in slide-in-from-bottom-8 duration-1000 delay-300">
+        {/* --- MENU GRID --- 
+            La fel, am pus 'sm:' la animații ca să nu îngreuneze mobilul
+        */}
+        <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl sm:animate-in sm:slide-in-from-bottom-8 sm:duration-1000 sm:delay-300">
           <Link href="/gallery" className="group bg-zinc-900/50 hover:bg-pink-900/20 border border-white/5 hover:border-pink-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">📸</span>
             <span className="text-sm font-bold text-zinc-300 group-hover:text-pink-200">Galerie</span>
@@ -170,13 +177,13 @@ export default function HomePage() {
             <span className="text-sm font-bold text-zinc-300 group-hover:text-emerald-200">Dorințe</span>
           </Link>
           
-          {/* BUTON NOU: PROGRAMĂRI (Full width) */}
+          {/* BUTON: PROGRAMĂRI */}
           <Link href="/programari" className="col-span-2 group bg-linear-to-r from-zinc-900 to-zinc-800 hover:from-fuchsia-900/20 hover:to-pink-900/20 border border-white/5 hover:border-fuchsia-500/30 p-4 rounded-2xl transition-all text-center flex flex-row items-center justify-center gap-4 mt-2">
              <div className="bg-white/5 p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl">💅</span>
              </div>
              <div className="text-left">
-                <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Agenda mea - pentru viitor dacǎ vei face</span>
+                <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Agenda mea</span>
                 <span className="text-xs text-zinc-500">Gestionează programările şi încasările</span>
              </div>
           </Link>
