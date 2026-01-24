@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 // --- SETĂRI PWA PENTRU MOBLIL ---
 export const viewport: Viewport = {
-  themeColor: "#09090b", // Bara de sus a telefonului va fi neagră
+  themeColor: "#ec4899", // Bara de sus a telefonului va fi neagră
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
