@@ -148,6 +148,7 @@ export default function HomePage() {
         </div>
 
         {/* --- MENU GRID --- */}
+        {/* --- MENU GRID --- */}
         <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl animate-in slide-in-from-bottom-8 duration-1000 delay-300">
           <Link href="/gallery" className="group bg-zinc-900/50 hover:bg-pink-900/20 border border-white/5 hover:border-pink-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">📸</span>
@@ -167,6 +168,17 @@ export default function HomePage() {
           <Link href="/dorinte" className="group bg-zinc-900/50 hover:bg-emerald-900/20 border border-white/5 hover:border-emerald-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">🎁</span>
             <span className="text-sm font-bold text-zinc-300 group-hover:text-emerald-200">Dorințe</span>
+          </Link>
+          
+          {/* BUTON NOU: PROGRAMĂRI (Full width) */}
+          <Link href="/programari" className="col-span-2 group bg-linear-to-r from-zinc-900 to-zinc-800 hover:from-fuchsia-900/20 hover:to-pink-900/20 border border-white/5 hover:border-fuchsia-500/30 p-4 rounded-2xl transition-all text-center flex flex-row items-center justify-center gap-4 mt-2">
+             <div className="bg-white/5 p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
+                <span className="text-2xl">💅</span>
+             </div>
+             <div className="text-left">
+                <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Programează-te</span>
+                <span className="text-xs text-zinc-500">Pentru unghii, direct pe WhatsApp</span>
+             </div>
           </Link>
         </div>
 
