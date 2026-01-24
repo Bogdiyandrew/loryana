@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 // --- SETĂRI PWA PENTRU MOBLIL ---
 export const viewport: Viewport = {
-  themeColor: "#ec4899", // Bara de sus a telefonului va fi neagră
+  themeColor: "#ec4899", // <--- MODIFICAT: Roz (ca în manifest), în loc de negru
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default", // <--- MODIFICAT: "default" elimină problemele de afișare
     title: "Loryana",
   },
 };
