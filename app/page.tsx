@@ -183,7 +183,7 @@ export default function HomePage() {
                 <span className="text-2xl">💅</span>
              </div>
              <div className="text-left">
-                <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Agenda mea</span>
+                <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Agenda mea - pentru viitor daca o sa faci</span>
                 <span className="text-xs text-zinc-500">Gestionează programările şi încasările</span>
              </div>
           </Link>
