@@ -1,27 +1,170 @@
-import { auth, signOut } from "@/auth"
+"use client"
 
-export default async function Home() {
-  const session = await auth();
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { signOut } from "@/auth" // Sau funcția de logout dacă folosim next-auth
+// Dacă nu ai importat signOut corect, vom face un buton simplu de form action momentan
+
+export default function HomePage() {
+  const [timeTogether, setTimeTogether] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  })
+
+  // Data voastră: 23 Iulie 2025
+  const startDate = new Date("2025-07-23T00:00:00")
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const now = new Date()
+      const difference = now.getTime() - startDate.getTime()
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24)
+      const minutes = Math.floor((difference / 1000 / 60) % 60)
+      const seconds = Math.floor((difference / 1000) % 60)
+
+      setTimeTogether({ days, hours, minutes, seconds })
+    }, 1000)
+
+    return () => clearInterval(timer)
+  }, [])
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-white p-8">
-      <h1 className="text-5xl font-bold text-rose-600 mb-6">
-        Te iubesc, {session?.user?.name}! 💖
-      </h1>
-      <p className="text-xl text-gray-700 mb-8 max-w-2xl text-center">
-        Bine ai venit pe site-ul nostru. Aici o să punem toate amintirile noastre.
-      </p>
+    <div className="min-h-dvh bg-zinc-950 text-pink-50 font-sans relative overflow-x-hidden selection:bg-pink-500/30">
 
-      <form
-        action={async () => {
-          "use server"
-          await signOut()
-        }}
-      >
-        <button className="rounded-full bg-gray-100 px-6 py-2 font-medium text-gray-900 hover:bg-gray-200 transition">
-          Ieșire din cont
-        </button>
-      </form>
+      {/* --- BACKGROUND EFFECTS --- */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-pink-600/20 rounded-full blur-[120px] animate-pulse"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+      </div>
+
+      <main className="relative z-10 container mx-auto px-4 py-8 flex flex-col items-center min-h-dvh">
+
+        {/* --- HEADER --- */}
+        <header className="w-full flex justify-between items-center mb-12 animate-in fade-in slide-in-from-top-4 duration-700">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">❤️</span>
+            <span className="font-bold text-lg tracking-widest text-pink-200 uppercase">Loryana</span>
+          </div>
+
+          {/* Buton Logout */}
+          <form action={async () => {
+            // Aici vom lega logout-ul real mai târziu, momentan e vizual
+            window.location.href = "/api/auth/signout"
+          }}>
+            <button className="text-xs font-bold text-pink-400/70 hover:text-pink-300 border border-pink-500/20 px-3 py-1.5 rounded-full transition-colors">
+              Ieșire
+            </button>
+          </form>
+        </header>
+
+        {/* --- HERO SECTION --- */}
+        <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl space-y-8 animate-in zoom-in-95 duration-1000">
+
+          <div className="relative">
+            <div className="absolute -inset-1 bg-linear-to-r from-pink-600 to-purple-600 rounded-full blur opacity-30 animate-pulse"></div>
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mx-auto">
+              {/* AICI O SĂ PUNEM POZA EI/VOASTRĂ */}
+              <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-4xl">
+                👩‍❤️‍👨
+              </div>
+              {/* <Image src="/poza-voastra.jpg" fill className="object-cover" /> */}
+            </div>
+            <div className="absolute bottom-0 right-0 bg-emerald-500 w-6 h-6 rounded-full border-4 border-zinc-950 flex items-center justify-center">
+              <div className="w-2 h-2 bg-white rounded-full animate-ping"></div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
+              Bună, Iubirea Mea!
+            </h1>
+            <p className="text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
+              Bine ai venit în universul nostru digital. Aici păstrez toate amintirile noastre.
+            </p>
+          </div>
+
+          {/* --- COUNTER CARD --- */}
+          <div className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl transform hover:scale-[1.02] transition-transform duration-500">
+            <h3 className="text-xs font-bold text-pink-500 uppercase tracking-[0.3em] mb-6">
+              Împreună De
+            </h3>
+
+            <div className="grid grid-cols-4 gap-2 sm:gap-4 text-center">
+              {/* Zile */}
+              <div className="flex flex-col">
+                <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">
+                  {timeTogether.days}
+                </span>
+                <span className="text-[10px] sm:text-xs text-zinc-500 uppercase font-bold mt-1">Zile</span>
+              </div>
+
+              {/* Ore */}
+              <div className="flex flex-col relative">
+                <span className="hidden sm:block absolute -left-2 top-2 text-zinc-700">:</span>
+                <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">
+                  {timeTogether.hours}
+                </span>
+                <span className="text-[10px] sm:text-xs text-zinc-500 uppercase font-bold mt-1">Ore</span>
+              </div>
+
+              {/* Minute */}
+              <div className="flex flex-col relative">
+                <span className="hidden sm:block absolute -left-2 top-2 text-zinc-700">:</span>
+                <span className="text-3xl sm:text-4xl font-black text-white tabular-nums">
+                  {timeTogether.minutes}
+                </span>
+                <span className="text-[10px] sm:text-xs text-zinc-500 uppercase font-bold mt-1">Min</span>
+              </div>
+
+              {/* Secunde */}
+              <div className="flex flex-col relative">
+                <span className="hidden sm:block absolute -left-2 top-2 text-zinc-700">:</span>
+                <span className="text-3xl sm:text-4xl font-black text-rose-500 tabular-nums animate-pulse">
+                  {timeTogether.seconds}
+                </span>
+                <span className="text-[10px] sm:text-xs text-rose-500/70 uppercase font-bold mt-1">Sec</span>
+              </div>
+            </div>
+
+            <div className="mt-6 pt-6 border-t border-white/5">
+              <p className="text-xs text-zinc-500 italic">
+                Începând cu 23 Iulie 2025... și până la infinit. ♾️
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* --- MENU GRID (Urmează să le facem funcționale) --- */}
+
+        <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl animate-in slide-in-from-bottom-8 duration-1000 delay-300">
+          <Link href="/gallery" className="group bg-zinc-900/50 hover:bg-pink-900/20 border border-white/5 hover:border-pink-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">📸</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-pink-200">Galeria Noastră</span>
+          </Link>
+
+          <Link href="/scrisori" className="group bg-zinc-900/50 hover:bg-purple-900/20 border border-white/5 hover:border-purple-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">💌</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-purple-200">Scrisori pentru Tine</span>
+          </Link>
+
+          <Link href="/timeline" className="group bg-zinc-900/50 hover:bg-rose-900/20 border border-white/5 hover:border-rose-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">🗓️</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-rose-200">Timeline</span>
+          </Link>
+
+          <Link href="/dorinte" className="group bg-zinc-900/50 hover:bg-emerald-900/20 border border-white/5 hover:border-emerald-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
+            <span className="text-2xl group-hover:scale-110 transition-transform duration-300">🎁</span>
+            <span className="text-sm font-bold text-zinc-300 group-hover:text-emerald-200">Dorințe</span>
+          </Link>
+        </div>
+
+      </main>
     </div>
-  );
+  )
 }
