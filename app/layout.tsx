@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -12,9 +12,28 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// --- SETĂRI PWA PENTRU MOBLIL ---
+export const viewport: Viewport = {
+  themeColor: "#09090b", // Bara de sus a telefonului va fi neagră
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false, // Se simte ca o aplicație nativă (fără zoom)
+};
+
 export const metadata: Metadata = {
   title: "Loryana",
   description: "Te iubesc",
+  manifest: "/manifest.json", // <-- AICI ESTE LEGĂTURA CU PWA
+  icons: {
+    icon: "/gallery/poza7.PNG",
+    apple: "/gallery/poza7.PNG", 
+  },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Loryana",
+  },
 };
 
 export default function RootLayout({
