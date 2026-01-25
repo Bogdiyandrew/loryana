@@ -30,29 +30,26 @@ export default function RootLayout({
             appId: "cd031b88-0af4-4cc2-8338-43901752358a",
             allowLocalhostAsSecureOrigin: true,
             
-            // 👇 --- LINII NOI IMPORTANTE PENTRU IPHONE/PWA --- 👇
-            // Îi spunem lui OneSignal să folosească worker-ul principal (sw.js)
-            // în loc să se bată cu el. Asta rezolvă eroarea "Could not get ServiceWorkerRegistration".
+            // Setări pentru unificarea worker-ilor (iPhone/PWA)
             serviceWorkerParam: { scope: "/" },
             serviceWorkerPath: "sw.js", 
-            // ----------------------------------------------------
           });
           
           // 2. Cerem permisiunea
           OneSignal.Slidedown.promptPush(); 
 
-          // 3. Afișarea notificării când ești pe site (Codul tău bun)
+          // 3. Ascultăm notificările când ești pe site
           try {
-             // Forțăm TypeScript să ignore tipurile stricte aici folosind 'as any'
              const os = OneSignal as any;
              if (os.Notifications) {
                 os.Notifications.addEventListener("foregroundWillDisplay", (event: any) => {
-                    console.log("Notificare primită în aplicație:", event);
-                    event.notification.display();
+                    console.log("Notificare primită în aplicație (va fi afișată automat):", event);
+                    // AM SCOS LINIA CARE DĂDEA EROARE: event.notification.display();
+                    // Notificarea apare singură dacă nu dăm 'event.preventDefault()'.
                 });
              }
           } catch (e) {
-             console.log("Eroare la setarea foreground listener (nu e critic):", e);
+             console.log("Eroare la setarea foreground listener:", e);
           }
 
         } catch (error) {
