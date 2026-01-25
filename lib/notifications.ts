@@ -4,12 +4,14 @@ export async function trimiteNotificareManuala(mesaj: string) {
   
   console.log("\n🚀 [DEBUG] Start trimitere notificare...");
 
-  const ONESIGNAL_APP_ID = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID as string;
-  const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY as string;
+  // --- AM PUS CHEILE DIRECT AICI CA SĂ FIM SIGURI CĂ MERGE ---
+  const ONESIGNAL_APP_ID = "cd031b88-0af4-4cc2-8338-43901752358a";
+  const ONESIGNAL_API_KEY = "os_v2_app_zubrxcak6rgmfazyioibourvrj3s4wjcjfbe7evjnxs3d2tz2osm3u3i6npolqhkfl6htvwppwpj6bm7nna6pcnjil7sxcjc4xkwhhq"; // <--- ATENȚIE: Trebuie să pui cheia lungă (REST API KEY) aici!
+  // -----------------------------------------------------------
 
-  if (!ONESIGNAL_APP_ID || !ONESIGNAL_API_KEY) {
-    console.error("⛔ [EROARE] Lipsesc cheile din .env!");
-    return { success: false, error: "Chei lipsă" };
+  if (ONESIGNAL_API_KEY.includes("PUNE_AICI")) {
+      console.error("⛔ [EROARE] Nu ai pus REST API KEY în cod!");
+      return { success: false, error: "Cheie lipsă" };
   }
 
   const headers = {
@@ -19,10 +21,9 @@ export async function trimiteNotificareManuala(mesaj: string) {
 
   const data = {
     app_id: ONESIGNAL_APP_ID,
-    // 👇 AICI ERA GREȘEALA. Trebuie "Subscribed Users", nu "Total Subscriptions"
-    included_segments: ["Subscribed Users"], 
+    included_segments: ["Total Subscriptions"], // Trimitem la toți abonații
     contents: { en: mesaj },
-    headings: { en: "Mesaj de la Iubitul tău ❤️" }, 
+    headings: { en: "Mesaj nou ❤️" }, 
     url: "https://loryana.vercel.app", 
   };
 
@@ -34,16 +35,17 @@ export async function trimiteNotificareManuala(mesaj: string) {
     });
 
     const responseData = await response.json();
-    console.log("📥 [DEBUG] Răspuns:", JSON.stringify(responseData, null, 2));
+    console.log("📥 [DEBUG] Răspuns OneSignal:", JSON.stringify(responseData, null, 2));
 
     if (!response.ok) {
-      throw new Error(`Eroare: ${responseData.errors?.[0] || response.statusText}`);
+        // Dacă primești eroare de la OneSignal, o vedem aici
+        return { success: false, error: responseData.errors?.[0] || "Eroare necunoscută" };
     }
     
     return { success: true };
 
   } catch (err) {
-    console.error("💥 [EROARE]", err);
-    return { success: false, error: "Nu s-a trimis" };
+    console.error("💥 [EROARE FETALĂ]", err);
+    return { success: false, error: "Nu s-a putut conecta la OneSignal" };
   }
 }
