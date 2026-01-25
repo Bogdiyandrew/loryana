@@ -26,20 +26,13 @@ export default function RootLayout({
       const runOneSignal = async () => {
         try {
           await OneSignal.init({
-            appId: "cd031b88-0af4-4cc2-8338-43901752358a",
+            appId: "cd031b88-0af4-4cc2-8338-43901752358a", // ID-ul tău este corect aici
             allowLocalhostAsSecureOrigin: true,
+            // AM SCOS 'notifyButton' CA SĂ SCĂPĂM DE EROAREA DE TYPESCRIPT
           });
           
-          // Cerem permisiunea
+          // Aceasta va forța apariția ferestrei de "Allow"
           OneSignal.Slidedown.promptPush(); 
-
-          // Ascultăm evenimentul (folosim 'any' ca să nu se plângă TypeScript)
-          OneSignal.Notifications.addEventListener("foregroundWillDisplay", (event: any) => {
-            console.log("Notificare primită în timp ce erai pe site:", event);
-            // NOTĂ: Dacă în Dashboard la Settings -> Push -> Advanced ai pus "Push Notification", 
-            // ea va apărea singură. Nu e nevoie de event.notification.display().
-          });
-
         } catch (error) {
           console.error("Eroare la inițializarea OneSignal:", error);
         }
