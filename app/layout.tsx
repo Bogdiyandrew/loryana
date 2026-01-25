@@ -25,17 +25,23 @@ export default function RootLayout({
     if (typeof window !== "undefined") {
       const runOneSignal = async () => {
         try {
-          // 1. Inițializarea (Codul tău care funcționează)
+          // 1. Inițializarea
           await OneSignal.init({
             appId: "cd031b88-0af4-4cc2-8338-43901752358a",
             allowLocalhostAsSecureOrigin: true,
+            
+            // 👇 --- LINII NOI IMPORTANTE PENTRU IPHONE/PWA --- 👇
+            // Îi spunem lui OneSignal să folosească worker-ul principal (sw.js)
+            // în loc să se bată cu el. Asta rezolvă eroarea "Could not get ServiceWorkerRegistration".
+            serviceWorkerParam: { scope: "/" },
+            serviceWorkerPath: "sw.js", 
+            // ----------------------------------------------------
           });
           
           // 2. Cerem permisiunea
           OneSignal.Slidedown.promptPush(); 
 
-          // 3. Afișarea notificării când ești pe site (Adăugare Sigură)
-          // Folosim 'try-catch' aici ca să fim siguri că nu stricăm restul aplicației
+          // 3. Afișarea notificării când ești pe site (Codul tău bun)
           try {
              // Forțăm TypeScript să ignore tipurile stricte aici folosind 'as any'
              const os = OneSignal as any;

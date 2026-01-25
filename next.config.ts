@@ -6,9 +6,13 @@ const withPWA = withPWAInit({
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: true,
   reloadOnOnline: true,
-  disable: process.env.NODE_ENV === "development", // PWA e dezactivat cât lucrezi la site, se activează când îl pui pe net
+  disable: process.env.NODE_ENV === "development",
   workboxOptions: {
     disableDevLogs: true,
+    // 👇 LINIA NOUĂ: Asta unește OneSignal cu PWA-ul tău
+    importScripts: ["https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js"],
+    skipWaiting: true,
+    clientsClaim: true,
   },
 });
 
