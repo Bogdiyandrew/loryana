@@ -31,7 +31,7 @@ export async function trimiteNotificareManuala(mesaj: string) {
     contents: { en: mesaj },
     headings: { en: "Mesaj de la Iubitul tău ❤️" }, 
     // NOTĂ: Pentru testare locală, e bine să pui localhost, altfel te duce pe un site care poate nu există încă
-    url: "http://localhost:3000", 
+    url: "https://loryana.vercel.app", 
   };
 
   // --- DEBUG 3: Încercăm request-ul către OneSignal ---
