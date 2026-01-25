@@ -4,24 +4,24 @@ export async function trimiteNotificareManuala(mesaj: string) {
   
   console.log("\n🚀 [DEBUG] Start trimitere notificare...");
 
-  // --- AM PUS CHEILE DIRECT AICI CA SĂ FIM SIGURI CĂ MERGE ---
-  const ONESIGNAL_APP_ID = "cd031b88-0af4-4cc2-8338-43901752358a";
-  const ONESIGNAL_API_KEY = "os_v2_app_zubrxcak6rgmfazyioibourvrj3s4wjcjfbe7evjnxs3d2tz2osm3u3i6npolqhkfl6htvwppwpj6bm7nna6pcnjil7sxcjc4xkwhhq"; // <--- ATENȚIE: Trebuie să pui cheia lungă (REST API KEY) aici!
-  // -----------------------------------------------------------
+  // Citim cheile din "seiful" serverului (Environment Variables)
+  const ONESIGNAL_APP_ID = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID;
+  const ONESIGNAL_API_KEY = process.env.ONESIGNAL_API_KEY;
 
-  if (ONESIGNAL_API_KEY.includes("PUNE_AICI")) {
-      console.error("⛔ [EROARE] Nu ai pus REST API KEY în cod!");
-      return { success: false, error: "Cheie lipsă" };
+  // Verificare de siguranță
+  if (!ONESIGNAL_APP_ID || !ONESIGNAL_API_KEY) {
+    console.error("⛔ [EROARE] Lipsesc cheile din Vercel Environment Variables!");
+    return { success: false, error: "Configurare server incompletă (lipsă chei)" };
   }
 
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
-    "Authorization": `Basic ${ONESIGNAL_API_KEY}`
+    "Authorization": `Basic ${ONESIGNAL_API_KEY}` // Cheia vine din server, nimeni nu o vede
   };
 
   const data = {
     app_id: ONESIGNAL_APP_ID,
-    included_segments: ["Total Subscriptions"], // Trimitem la toți abonații
+    included_segments: ["Total Subscriptions"], 
     contents: { en: mesaj },
     headings: { en: "Mesaj nou ❤️" }, 
     url: "https://loryana.vercel.app", 
@@ -35,17 +35,17 @@ export async function trimiteNotificareManuala(mesaj: string) {
     });
 
     const responseData = await response.json();
-    console.log("📥 [DEBUG] Răspuns OneSignal:", JSON.stringify(responseData, null, 2));
 
     if (!response.ok) {
-        // Dacă primești eroare de la OneSignal, o vedem aici
-        return { success: false, error: responseData.errors?.[0] || "Eroare necunoscută" };
+        console.error("❌ Eroare OneSignal:", responseData);
+        return { success: false, error: responseData.errors?.[0] || "Eroare la trimitere" };
     }
     
+    console.log("✅ Notificare trimisă cu succes!");
     return { success: true };
 
   } catch (err) {
-    console.error("💥 [EROARE FETALĂ]", err);
-    return { success: false, error: "Nu s-a putut conecta la OneSignal" };
+    console.error("💥 Eroare server:", err);
+    return { success: false, error: "Eroare server" };
   }
 }
