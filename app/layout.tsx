@@ -25,14 +25,30 @@ export default function RootLayout({
     if (typeof window !== "undefined") {
       const runOneSignal = async () => {
         try {
+          // 1. Inițializarea (Codul tău care funcționează)
           await OneSignal.init({
-            appId: "cd031b88-0af4-4cc2-8338-43901752358a", // ID-ul tău este corect aici
+            appId: "cd031b88-0af4-4cc2-8338-43901752358a",
             allowLocalhostAsSecureOrigin: true,
-            // AM SCOS 'notifyButton' CA SĂ SCĂPĂM DE EROAREA DE TYPESCRIPT
           });
           
-          // Aceasta va forța apariția ferestrei de "Allow"
+          // 2. Cerem permisiunea
           OneSignal.Slidedown.promptPush(); 
+
+          // 3. Afișarea notificării când ești pe site (Adăugare Sigură)
+          // Folosim 'try-catch' aici ca să fim siguri că nu stricăm restul aplicației
+          try {
+             // Forțăm TypeScript să ignore tipurile stricte aici folosind 'as any'
+             const os = OneSignal as any;
+             if (os.Notifications) {
+                os.Notifications.addEventListener("foregroundWillDisplay", (event: any) => {
+                    console.log("Notificare primită în aplicație:", event);
+                    event.notification.display();
+                });
+             }
+          } catch (e) {
+             console.log("Eroare la setarea foreground listener (nu e critic):", e);
+          }
+
         } catch (error) {
           console.error("Eroare la inițializarea OneSignal:", error);
         }
