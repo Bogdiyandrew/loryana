@@ -35,19 +35,19 @@ export default function AdminPage() {
             <ArrowLeft className="w-5 h-5" />
          </Link>
          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-purple-500">
-            Panou Control ❤️
+            Panou de control
          </h1>
       </div>
 
       <div className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-3xl p-6 shadow-2xl">
         <label className="block text-sm font-bold text-zinc-400 mb-2 uppercase tracking-wider">
-          Ce vrei să îi transmiți?
+          Ce vrei să transmiți?
         </label>
         
         <textarea
           value={mesaj}
           onChange={(e) => setMesaj(e.target.value)}
-          placeholder="Ex: Mi-e dor de tine... sau Intră pe aplicație, am pus ceva nou!"
+          placeholder="Ex: Intra in aplicatie"
           className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-white placeholder:text-zinc-600 focus:border-pink-500 outline-none min-h-[150px] resize-none mb-6 text-lg"
         />
 
@@ -62,7 +62,7 @@ export default function AdminPage() {
             disabled:opacity-50 disabled:cursor-not-allowed
           `}
         >
-          {status === "idle" && <><Send className="w-5 h-5" /> Trimite Notificarea</>}
+          {status === "idle" && <><Send className="w-5 h-5" /> Trimite</>}
           {status === "loading" && "Se trimite..."}
           {status === "success" && <><CheckCircle className="w-5 h-5" /> Trimis cu succes!</>}
           {status === "error" && <><AlertCircle className="w-5 h-5" /> Eroare!</>}
