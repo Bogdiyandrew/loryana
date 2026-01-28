@@ -102,7 +102,7 @@ export default function HomePage() {
               Bună, iubire!
             </h1>
             <p className="text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
-              Bine ai venit în universul nostru digital. Aici păstrez toate amintirile noastre.
+              Bine ai venit în universul digital. Aici păstrez toate amintirile noastre.
             </p>
 
             {/* --- BUTON TEMPORAR PENTRU ACTIVARE NOTIFICĂRI (MOBIL) --- */}
