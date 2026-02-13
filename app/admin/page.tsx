@@ -70,7 +70,7 @@ export default function AdminPage() {
       </div>
       
       <p className="mt-8 text-zinc-600 text-xs text-center max-w-xs">
-        Notificarea va ajunge instant pe telefonul ei (și al tău) dacă are internetul pornit.
+        Notificare
       </p>
     </div>
   )
