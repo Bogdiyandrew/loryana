@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 // Importăm OneSignal pentru butonul manual
 import OneSignal from "react-onesignal"
+import { Lock, Heart } from "lucide-react" // Importăm iconițe pentru lacăt și inimă
 
 export default function HomePage() {
   const [timeTogether, setTimeTogether] = useState({
@@ -14,24 +15,53 @@ export default function HomePage() {
     seconds: 0
   })
 
+  // State pentru deblocarea surprizei
+  const [isSurpriseUnlocked, setIsSurpriseUnlocked] = useState(false)
+  const [timeLeftToUnlock, setTimeLeftToUnlock] = useState("")
+
   // Data voastră: 23 Iulie 2025
   const startDate = new Date("2025-07-23T00:00:00")
+
+  // Data deblocării: 13 Februarie 2026, ora 08:00
+  // Modifică anul dacă vrei să fie pentru anul curent sau viitor
+  const unlockDate = new Date("2026-02-13T16:00:00") 
 
   useEffect(() => {
     const timer = setInterval(() => {
       const now = new Date()
+      
+      // 1. Calcul timp împreună
       const difference = now.getTime() - startDate.getTime()
-
       const days = Math.floor(difference / (1000 * 60 * 60 * 24))
       const hours = Math.floor((difference / (1000 * 60 * 60)) % 24)
       const minutes = Math.floor((difference / 1000 / 60) % 60)
       const seconds = Math.floor((difference / 1000) % 60)
-
       setTimeTogether({ days, hours, minutes, seconds })
+
+      // 2. Verificare deblocare surpriză
+      const diffUnlock = unlockDate.getTime() - now.getTime()
+      
+      if (diffUnlock <= 0) {
+        setIsSurpriseUnlocked(true)
+      } else {
+        setIsSurpriseUnlocked(false)
+        // Calculăm timpul rămas până la deblocare pentru afișare (opțional)
+        const d = Math.floor(diffUnlock / (1000 * 60 * 60 * 24))
+        const h = Math.floor((diffUnlock / (1000 * 60 * 60)) % 24)
+        const m = Math.floor((diffUnlock / 1000 / 60) % 60)
+        const s = Math.floor((diffUnlock / 1000) % 60)
+        
+        let timeString = ""
+        if (d > 0) timeString += `${d}z `
+        if (h > 0) timeString += `${h}h `
+        timeString += `${m}m ${s}s`
+        setTimeLeftToUnlock(timeString)
+      }
+
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [startDate])
+  }, [startDate, unlockDate]) // Adăugat unlockDate la dependințe
 
   // --- FUNCȚIE PENTRU BUTONUL DE NOTIFICĂRI ---
   const aboneazaMa = async () => {
@@ -169,6 +199,35 @@ export default function HomePage() {
 
         {/* --- MENU GRID --- */}
         <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl sm:animate-in sm:slide-in-from-bottom-8 sm:duration-1000 sm:delay-300">
+          
+          {/* --- SPECIAL VALENTINE'S CONTAINER (CONDITIONAL) --- */}
+          {isSurpriseUnlocked ? (
+            // Varianta DEBLOCATĂ
+            <Link href="/valentine" className="col-span-2 group relative overflow-hidden bg-gradient-to-r from-rose-600 to-pink-600 border border-white/20 p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-xl shadow-rose-900/30 text-center flex flex-col items-center justify-center gap-2 animate-in zoom-in duration-500">
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                <div className="relative z-10 animate-bounce">
+                  <span className="text-4xl">💌</span>
+                </div>
+                <div className="relative z-10">
+                  <span className="block text-xl font-bold text-white tracking-wide">Am o întrebare...</span>
+                  <span className="text-xs text-pink-100 uppercase tracking-widest font-bold opacity-80">Apasă aici</span>
+                </div>
+            </Link>
+          ) : (
+            // Varianta BLOCATĂ
+            <div className="col-span-2 group relative overflow-hidden bg-zinc-900/80 border border-white/10 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-2 opacity-80 cursor-not-allowed">
+                <div className="relative z-10">
+                  <Lock className="w-8 h-8 text-zinc-500 mb-2 mx-auto" />
+                </div>
+                <div className="relative z-10">
+                  <span className="block text-sm font-bold text-zinc-400 tracking-wide">Surpriză 🤫</span>
+                  <span className="text-[10px] text-zinc-500 font-mono mt-1">
+                    Se deblochează în: <span className="text-pink-500 font-bold">{timeLeftToUnlock}</span>
+                  </span>
+                </div>
+            </div>
+          )}
+
           <Link href="/gallery" className="group bg-zinc-900/50 hover:bg-pink-900/20 border border-white/5 hover:border-pink-500/30 p-4 rounded-2xl transition-all text-left flex flex-col gap-2">
             <span className="text-2xl group-hover:scale-110 transition-transform duration-300">📸</span>
             <span className="text-sm font-bold text-zinc-300 group-hover:text-pink-200">Galerie</span>
