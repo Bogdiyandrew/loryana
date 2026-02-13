@@ -24,7 +24,7 @@ export default function HomePage() {
 
   // Data deblocării: 13 Februarie 2026, ora 08:00
   // Modifică anul dacă vrei să fie pentru anul curent sau viitor
-  const unlockDate = new Date("2026-02-13T16:00:00") 
+  const unlockDate = new Date("2026-02-13T20:00:00") 
 
   useEffect(() => {
     const timer = setInterval(() => {
