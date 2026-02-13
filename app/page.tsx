@@ -140,7 +140,7 @@ export default function HomePage() {
               href="/admin"
               className="mt-4 px-5 py-2.5 bg-zinc-800/50 hover:bg-pink-900/40 border border-pink-500/30 text-pink-200 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto"
             >
-              ⚙️ Admin
+              Admin
             </Link>
             {/* --------------------------------------------------------- */}
           </div>
