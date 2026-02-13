@@ -70,13 +70,15 @@ export default function ScrisoriPage() {
             title: "Secret de Valentine's Day 🌹",
             emoji: "🔒",
             date: "14 Feb 2026",
-            unlockDate: "2026-02-14T00:00:00",
+            unlockDate: "2026-02-13T00:00:00",
             color: "from-red-600 to-rose-700",
             content: `
         La mulți ani de Ziua Îndrăgostiților, iubita mea! ❤️
         
-        Poate că e o sărbătoare comercială pentru alții, dar pentru mine e doar o altă scuză să te răsfăț și să îți spun cât de mult însemni pentru mine.
-        Ești Valentin-ul meu pe viață.
+        Astǎzi sǎrbatorim primul nostru V-day!!
+        Vreau sǎ îți spun prima datǎ cǎ te iubesc cel mai mult chiar dacǎ nu o simți mereu. Îmi doresc ca pe viitor sǎ se rezolve toate problemele şi sǎ ne bucurǎm de noi doi, sǎ ne facem un rost în viațǎ, sǎ ne mutam împreunǎ şi totul sa fie PERFECT.
+        Sincer îți spun ca tot ce imi doresc e sǎ fim din ce în ce mai bine şi sǎ se rezolve toate problemele cu timpul.
+        Te iubesc din ce în ce mai mult!
       `
         },
 
