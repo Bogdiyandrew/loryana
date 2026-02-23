@@ -91,10 +91,13 @@ export default function ScrisoriPage() {
             unlockDate: "2026-02-24T00:00:00",
             color: "from-blue-500 to-indigo-600",
             content: `
-        Dragobetele sărută fetele! 😘
+        De Dragobete vreau sa iti reamintesc despre povestea noastra de dragoste
         
-        Astăzi sărbătorim iubirea în stil românesc. Se spune că cine se iubește astăzi, va avea un an plin de belșug.
-        Eu zic că noi o să avem o viață întreagă de belșug sufletesc. Te iubesc, mândra mea!
+       Iti las acest mesaj ca sa iti aduc aminte ca insemni cel mai mult pentru mine
+       Orice clipa de bine sau de rau alaturi de tine reprezinta o amintire frumoasa.
+       Iti multumesc ca esti alaturi de mine, ma asculti si ma sprijini indiferent de situatie.
+       Restul scrisorii o vei primi fizic.
+       Love you
       `
         },
 
