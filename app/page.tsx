@@ -22,9 +22,8 @@ export default function HomePage() {
   // Data voastră: 23 Iulie 2025
   const startDate = new Date("2025-07-23T00:00:00")
 
-  // Data deblocării: 13 Februarie 2026, ora 08:00
-  // Modifică anul dacă vrei să fie pentru anul curent sau viitor
-  const unlockDate = new Date("2026-02-13T23:30:00") 
+  // Data deblocării: 1 Martie 2026, ora 00:00
+  const unlockDate = new Date("2026-03-01T00:00:00") 
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -61,7 +60,7 @@ export default function HomePage() {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [startDate, unlockDate]) // Adăugat unlockDate la dependințe
+  }, [startDate, unlockDate])
 
   // --- FUNCȚIE PENTRU BUTONUL DE NOTIFICĂRI ---
   const aboneazaMa = async () => {
@@ -108,7 +107,7 @@ export default function HomePage() {
         <div className="flex-1 flex flex-col items-center justify-center text-center w-full max-w-2xl space-y-8 sm:animate-in sm:zoom-in-95 sm:duration-1000">
 
           <div className="relative">
-            <div className="absolute -inset-1 bg-linear-to-r from-pink-600 to-purple-600 rounded-full blur opacity-30 animate-pulse"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full blur opacity-30 animate-pulse"></div>
             
             <div className="relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-white/10 overflow-hidden shadow-2xl mx-auto">
               <Image 
@@ -128,7 +127,7 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-linear-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
+            <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-200 via-pink-400 to-rose-400 drop-shadow-sm">
               Bună, iubire!
             </h1>
             <p className="text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
@@ -138,7 +137,7 @@ export default function HomePage() {
             {/* --- BUTON TEMPORAR PENTRU ACTIVARE NOTIFICĂRI (MOBIL) --- */}
             <Link 
               href="/admin"
-              className="mt-4 px-5 py-2.5 bg-zinc-800/50 hover:bg-pink-900/40 border border-pink-500/30 text-pink-200 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto"
+              className="mt-4 px-5 py-2.5 bg-zinc-800/50 hover:bg-pink-900/40 border border-pink-500/30 text-pink-200 text-sm font-semibold rounded-full shadow-lg backdrop-blur-sm transition-all active:scale-95 flex items-center justify-center gap-2 mx-auto w-max"
             >
               Admin
             </Link>
@@ -200,29 +199,33 @@ export default function HomePage() {
         {/* --- MENU GRID --- */}
         <div className="w-full grid grid-cols-2 gap-3 mt-12 mb-6 max-w-2xl sm:animate-in sm:slide-in-from-bottom-8 sm:duration-1000 sm:delay-300">
           
-          {/* --- SPECIAL VALENTINE'S CONTAINER (CONDITIONAL) --- */}
+          {/* --- SURPRIZĂ DE PRIMĂVARĂ (CONDITIONAL) --- */}
           {isSurpriseUnlocked ? (
-            // Varianta DEBLOCATĂ
-            <Link href="/valentine" className="col-span-2 group relative overflow-hidden bg-gradient-to-r from-rose-600 to-pink-600 border border-white/20 p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-xl shadow-rose-900/30 text-center flex flex-col items-center justify-center gap-2 animate-in zoom-in duration-500">
+            // Varianta DEBLOCATĂ (Mărțișor)
+            <Link href="/martisor" className="col-span-2 group relative overflow-hidden bg-gradient-to-r from-emerald-500 to-teal-600 border border-white/20 p-6 rounded-2xl transition-all hover:scale-[1.02] shadow-xl shadow-emerald-900/30 text-center flex flex-col items-center justify-center gap-2 animate-in zoom-in duration-500">
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                <div className="relative z-10 animate-bounce">
-                  <span className="text-4xl">💌</span>
+                
+                {/* Detaliu subtil: Șnur de mărțișor (Alb-Roșu) */}
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-white via-red-500 to-white opacity-80"></div>
+                
+                <div className="relative z-10 animate-bounce mt-2">
+                  <span className="text-4xl">🌷</span>
                 </div>
                 <div className="relative z-10">
-                  <span className="block text-xl font-bold text-white tracking-wide">Am o întrebare...</span>
-                  <span className="text-xs text-pink-100 uppercase tracking-widest font-bold opacity-80">Apasă aici</span>
+                  <span className="block text-xl font-bold text-white tracking-wide">Mărțișorul tău...</span>
+                  <span className="text-xs text-emerald-100 uppercase tracking-widest font-bold opacity-90">Apasă aici să-l deschizi</span>
                 </div>
             </Link>
           ) : (
             // Varianta BLOCATĂ
-            <div className="col-span-2 group relative overflow-hidden bg-zinc-900/80 border border-white/10 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-2 opacity-80 cursor-not-allowed">
+            <div className="col-span-2 group relative overflow-hidden bg-zinc-900/80 border border-emerald-500/20 p-6 rounded-2xl text-center flex flex-col items-center justify-center gap-2 opacity-80 cursor-not-allowed">
                 <div className="relative z-10">
-                  <Lock className="w-8 h-8 text-zinc-500 mb-2 mx-auto" />
+                  <Lock className="w-8 h-8 text-emerald-700/60 mb-2 mx-auto" />
                 </div>
                 <div className="relative z-10">
-                  <span className="block text-sm font-bold text-zinc-400 tracking-wide">Surpriză 🤫</span>
+                  <span className="block text-sm font-bold text-emerald-100/70 tracking-wide">Magia primăverii 🌸</span>
                   <span className="text-[10px] text-zinc-500 font-mono mt-1">
-                    Se deblochează în: <span className="text-pink-500 font-bold">{timeLeftToUnlock}</span>
+                    Înflorește în: <span className="text-emerald-400 font-bold">{timeLeftToUnlock}</span>
                   </span>
                 </div>
             </div>
@@ -248,13 +251,13 @@ export default function HomePage() {
             <span className="text-sm font-bold text-zinc-300 group-hover:text-emerald-200">Dorințe</span>
           </Link>
           
-          <Link href="/programari" className="col-span-2 group bg-linear-to-r from-zinc-900 to-zinc-800 hover:from-fuchsia-900/20 hover:to-pink-900/20 border border-white/5 hover:border-fuchsia-500/30 p-4 rounded-2xl transition-all text-center flex flex-row items-center justify-center gap-4 mt-2">
+          <Link href="/programari" className="col-span-2 group bg-gradient-to-r from-zinc-900 to-zinc-800 hover:from-fuchsia-900/20 hover:to-pink-900/20 border border-white/5 hover:border-fuchsia-500/30 p-4 rounded-2xl transition-all text-center flex flex-row items-center justify-center gap-4 mt-2">
              <div className="bg-white/5 p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
                 <span className="text-2xl">💅</span>
              </div>
              <div className="text-left">
                 <span className="block text-sm font-bold text-pink-100 group-hover:text-fuchsia-200">Agenda mea</span>
-                <span className="text-xs text-zinc-500">Gestionează programările şi încasările</span>
+                <span className="text-xs text-zinc-500">Gestionează programările și încasările</span>
              </div>
           </Link>
         </div>
