@@ -104,23 +104,40 @@ export default function ScrisoriPage() {
         // Ziua Femeii
         {
             id: 6,
-            title: "Pentru cea mai frumoasă femeie 🌷",
-            emoji: "💃",
-            date: "08 Mar 2026",
-            unlockDate: "2026-03-08T00:00:00",
+            title: "Pentru cea mai frumoasă fetițǎ ❤️",
+            emoji: "😍",
+            date: "01 Mar 2026",
+            unlockDate: "2026-03-01T21:30:00",
             color: "from-fuchsia-500 to-pink-500",
             content: `
-        La mulți ani de 8 Martie!
+        La mulți ani de 1 Martie iubita mea!
         
-        Ești puternică, ești frumoasă, ești inteligentă și ești a mea.
-        Îți mulțumesc că îmi faci viața mai colorată prin simpla ta prezență.
-        Astăzi ești regină (deși pentru mine ești în fiecare zi).
+        Ești puternică, frumoasă, inteligentă și ești a mea.
+        Îți mulțumesc că îmi faci viața mai frumaosǎ zi de zi prin prezența ta.
+        Îți urez o primǎvarǎ superbǎ la fel ca tine
+      `
+        },
+        {
+            id: 7,
+            title: "De ziua femeii 🌹",
+            emoji: "👑",
+            date: "08 Mar 2026",
+            unlockDate: "2026-03-08T09:00:00",
+            color: "from-purple-500 to-pink-600",
+            content: `
+        La mulți ani de Ziua Femeii, inima mea!
+        
+        Astăzi te sărbătoresc pe tine, femeia minunată care stă lângă mine. Admir la tine ambiția, grija pe care mi-o porți și felul în care știi să aduci liniște atunci când totul pare haotic.
+        
+        Sunt cel mai norocos bărbat pentru că am șansa să te iubesc și să te am alături. Promit să te prețuiesc și să te fac să te simți iubită nu doar azi, ci în fiecare zi a vieții noastre.
+        
+        Te ador! ❤️
       `
         },
 
         // 1 AN DE RELAȚIE
         {
-            id: 7,
+            id: 8,
             title: "1 AN DE NOI DOI! 🥂",
             emoji: "👑",
             date: "23 Iul 2026",
