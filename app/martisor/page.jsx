@@ -54,7 +54,7 @@ export default function MartisorPage() {
             Primul nostru Mărțișor
           </h1>
           <p className="text-zinc-400 text-sm mb-8 font-mono tracking-widest uppercase">
-            1 Martie 2026
+            1 Martie 2025
           </p>
 
           {/* Mesajul scrisorii */}
